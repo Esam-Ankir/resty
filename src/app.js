@@ -92,8 +92,8 @@ function App() {
     <>
       <Header />
       <Form callApi={callApi} />
-      <div>Request Method: {req.method}</div>
-      <div>URL: {req.url}</div>
+      <div data-testid="Request-Method">Request Method: {req.method}</div>
+      <div data-testid="urlDiv">URL: {req.url}</div>
       {<Results data={data}></Results>}
       <Footer />
     </>
