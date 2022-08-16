@@ -1,55 +1,39 @@
-import React from 'react';
-import {useState} from 'react';
-import './form.scss';
+import React, { useState } from "react";
+import "./form.scss";
 
-function Form (props) {
-const [method,setMethod]=useState("get");
-const [apiUrl,setUrl]=useState("https://pokeapi.co/api/v2/pokemon");
-const[body,setBody]=useState("");
- const handleSubmit = e => {
+function Form(props) {
+  const [method, setMethod] = useState("get");
+  const [url, setUrl] = useState("");
+  const [body, setBody] = useState("");
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    const formData = {
-      method:method,
-      url:apiUrl ,
-      body:body,
-    };
-    props.handleApiCall(formData);
-  }
-const inputHandler=e=>{
-  let x=document.getElementById("u").value;
-  console.log("url= ",x)
-  setUrl(x);
+    props.callApi({ method, url, body });
+  };
+  const handleInput = (e) => {
+    setUrl(document.getElementById("inputId").value);
+  };
+  const handleForm = (e) => {
+    setBody(document.getElementById("body").value);
+  };
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <label className="url">
+          <span>URL:</span>
+          <input name="url" type="text" id="inputId" onInput={handleInput} />
+          <button type="submit" > GO! </button>
+        </label>
+        <label >
+          <button id="get" onClick={() => { setMethod("get") }}  >GET </button>
+          <button id="post" onClick={() => { setMethod("post") }}>POST</button>
+          <button id="put" onClick={() => { setMethod("put") }}>PUT</button>
+          <button id="delete" onClick={() => { setMethod("delete") }} >DELETE</button>
+        </label>
+      </form>
+      {method === "post" || method === "put" ? (<textarea onInput={handleForm} placeholder="type here" ></textarea>) : null}
+    </>
+  );
 }
-  const handlebody=e=>{
-    let x=document.getElementById("body").value;
-    console.log(x);
-    setBody(x);
-  }
-    return (
-      <>
-        <form onSubmit={handleSubmit}>
-          <label >
-            <span>URL: </span>
-            <input name='url' type='text' id="u" onInput={inputHandler} data-testid="url"/>
-            <button type="submit" data-testid="go">GO!</button>
-          </label>
-          <label className="methods">
-            <span id="get" onClick={()=>{setMethod("get");}} data-testid="get">GET</span>
-            <span id="post" onClick={()=>{setMethod("post");}}>POST</span>
-            <span id="put" onClick={()=>{setMethod("put");}}>PUT</span>
-            <span id="delete" onClick={()=>{setMethod("delete");}}>DELETE</span>
-          </label>
-         
-        </form>
-        {method=="post"||method=="put"?
-        <textarea id="body" onInput={handlebody} placeholder='name=!!'  ></textarea>:null
-}
-        
-      </>
-    );
-  
-}
-
 
 export default Form;

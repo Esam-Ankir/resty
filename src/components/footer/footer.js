@@ -4,7 +4,7 @@ import './footer.scss';
 function Footer(props) {
   return (
     <>
-      <footer>&copy; 2022</footer>
+      <footer>&copy; 2022 Esam Ankir</footer>
     </>
   )
 }

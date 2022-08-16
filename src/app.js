@@ -12,34 +12,35 @@ function App() {
     count: 0,
     response: "",
   });
-  const [divData, setdivData] = useState({
+  const [req, setReq] = useState({
     method: "get",
-    url: "https://pokeapi.co/api/v2/pokemon",
+    // url: "https://swapi.dev/api/people/1/",
   });
 
-  useEffect(() => {
-    setData({ status: "loading" });
-  }, [divData]);
+  useEffect(() => { setData() }, [req]);
 
-  const callApi = (requestParams) => {
-    if (requestParams.method == "get") {
+  const callApi = (req) => {
+
+    if (req.method === "get") {
       axios
-        .get(requestParams.url)
+        .get(req.url)
         .then((data) => {
           const formData = {
-            header: data.headers,
+            Headers: data.headers,
             count: data.data.length,
-            data: data.data,
+            results: data.data,
           };
+          console.log(data);
           setData(formData);
         })
         .catch((e) => {
+          setData({ response: "loading" })
           console.log(e);
         });
     }
-    if (requestParams.method == "post") {
+    if (req.method === "post") {
       axios
-        .post(requestParams.url, requestParams.body)
+        .post(req.url, req.body)
         .then(function (data) {
           const formData = {
             header: data.headers,
@@ -49,12 +50,13 @@ function App() {
           setData(formData);
         })
         .catch((e) => {
+          setData({ response: "loading" })
           console.log(e);
         });
     }
-    if (requestParams.method == "delete") {
+    if (req.method === "delete") {
       axios
-        .delete(requestParams.url)
+        .delete(req.url)
         .then((data) => {
           const formData = {
             header: data.headers,
@@ -64,12 +66,13 @@ function App() {
           setData(formData);
         })
         .catch((e) => {
+          setData({ response: "loading" })
           console.log(e);
         });
     }
-    if (requestParams.method == "put") {
+    if (req.method === "put") {
       axios
-        .put(requestParams.url, requestParams.body)
+        .put(req.url, req.body)
         .then((data) => {
           const formData = {
             header: data.headers,
@@ -79,17 +82,18 @@ function App() {
           setData(formData);
         })
         .catch((e) => {
+          setData({ response: "loading" })
           console.log(e);
         });
     }
-    setdivData(requestParams);
+    setReq(req);
   };
   return (
     <>
       <Header />
-      <Form handleApiCall={callApi} />
-      <div data-testid="method">Request Method: {divData.method}</div>
-      <div data-testid="urlDiv">URL: {divData.url}</div>
+      <Form callApi={callApi} />
+      <div>Request Method: {req.method}</div>
+      <div>URL: {req.url}</div>
       {<Results data={data}></Results>}
       <Footer />
     </>

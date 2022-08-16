@@ -4,20 +4,27 @@ $radius: 40%;
 form {
   display: inline-block;
   margin: auto;
-  width: 200px;
+  width: 400px;
 
   label {
     display: flex;
     margin: 1rem 0;
+    height: 30px;
+  
+    input {
+      width: 70%;
+      height: 30px;
+    }
 
     &.methods {
       span {
         cursor: pointer;
-        margin-right: 1rem;
+        margin-right: 20rem;
         padding: .25rem .5rem;
         background: #ccc;
-
-        &:hover, &.active {
+        
+        &:hover,
+        &.active {
           background: #fff;
         }
       }
