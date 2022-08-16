@@ -21,14 +21,14 @@ function Form(props) {
       <form onSubmit={handleSubmit}>
         <label className="url">
           <span>URL:</span>
-          <input name="url" type="text" id="inputId" onInput={handleInput} />
-          <button type="submit" > GO! </button>
+          <input name="url" type="text" id="inputId" data-testid="url" onInput={handleInput} />
+          <button type="submit" data-testid="go"> GO! </button>
         </label>
         <label >
-          <button id="get" onClick={() => { setMethod("get") }}  >GET </button>
-          <button id="post" onClick={() => { setMethod("post") }}>POST</button>
-          <button id="put" onClick={() => { setMethod("put") }}>PUT</button>
-          <button id="delete" onClick={() => { setMethod("delete") }} >DELETE</button>
+          <span id="get" onClick={() => { setMethod("get") }} data-testid="get" >GET </span>
+          <span id="post" onClick={() => { setMethod("post") }}>POST</span>
+          <span id="put" onClick={() => { setMethod("put") }}>PUT</span>
+          <span id="delete" onClick={() => { setMethod("delete") }} >DELETE</span>
         </label>
       </form>
       {method === "post" || method === "put" ? (<textarea onInput={handleForm} placeholder="type here" ></textarea>) : null}
