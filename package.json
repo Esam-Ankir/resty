@@ -1,22 +1,42 @@
 {
-  "name": "class-26-solution",
+  "name": "resty",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
   "main": "src/index.js",
+  "private": true,
+  "homepage": "https://Esam-Ankir.github.io/resty/",
   "dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^14.4.3",
+    "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "gh-pages": "^4.0.0",
+    "jest": "^26.6.0",
+    "msw": "^0.44.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-json-pretty": "^2.2.0",
     "react-jsonschema-form": "1.8.1",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.3",
-    "sass": "^1.49.9"
+    "sass": "^1.49.9",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --watchAll --testMatch **/src/**/*.test.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [

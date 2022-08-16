@@ -1,63 +1,39 @@
-import React from 'react';
+import React, { useState } from "react";
+import "./form.scss";
 
-import './form.scss';
 function Form(props) {
-  const handleSubmit = e => {
+  const [method, setMethod] = useState("get");
+  const [url, setUrl] = useState("");
+  const [body, setBody] = useState("");
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = {
-      method: 'GET',
-      url: 'https://pokeapi.co/api/v2/pokemon',
-    };
-    props.handleApiCall(formData);
-  }
+    props.callApi({ method, url, body });
+  };
+  const handleInput = (e) => {
+    setUrl(document.getElementById("inputId").value);
+  };
+  const handleForm = (e) => {
+    setBody(document.getElementById("body").value);
+  };
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label >
-          <span>URL: </span>
-          <input name='url' type='text' />
-          <button type="submit">GO!</button>
+        <label className="url">
+          <span>URL:</span>
+          <input name="url" type="text" id="inputId" onInput={handleInput} />
+          <button type="submit" > GO! </button>
         </label>
-        <label className="methods">
-          <span id="get">GET</span>
-          <span id="post">POST</span>
-          <span id="put">PUT</span>
-          <span id="delete">DELETE</span>
+        <label >
+          <button id="get" onClick={() => { setMethod("get") }}  >GET </button>
+          <button id="post" onClick={() => { setMethod("post") }}>POST</button>
+          <button id="put" onClick={() => { setMethod("put") }}>PUT</button>
+          <button id="delete" onClick={() => { setMethod("delete") }} >DELETE</button>
         </label>
       </form>
+      {method === "post" || method === "put" ? (<textarea onInput={handleForm} placeholder="type here" ></textarea>) : null}
     </>
-  )
+  );
 }
-// class Form extends React.Component {
-
-//   handleSubmit = e => {
-//     e.preventDefault();
-//     const formData = {
-//       method:'GET',
-//       url: 'https://pokeapi.co/api/v2/pokemon',
-//     };
-//     this.props.handleApiCall(formData);
-//   }
-
-//   render() {
-//     return (
-//       <>
-// <form onSubmit={this.handleSubmit}>
-//   <label >
-//     <span>URL: </span>
-//     <input name='url' type='text' />
-//     <button type="submit">GO!</button>
-//   </label>
-//   <label className="methods">
-//     <span id="get">GET</span>
-//     <span id="post">POST</span>
-//     <span id="put">PUT</span>
-//     <span id="delete">DELETE</span>
-//   </label>
-// </form>
-//       </>
-//     );
-//   }
-// }
 
 export default Form;

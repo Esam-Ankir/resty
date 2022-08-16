@@ -1,48 +1,102 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import "./app.scss";
+import Header from "./components/header/header";
+import Footer from "./components/footer/footer";
+import Form from "./components/form/form";
+import Results from "./components/results/results";
+import axios from "axios";
 
-import './app.scss';
+function App() {
+  const [data, setData] = useState({
+    header: "header",
+    count: 0,
+    response: "",
+  });
+  const [req, setReq] = useState({
+    method: "get",
+    // url: "https://swapi.dev/api/people/1/",
+  });
 
-// Let's talk about using index.js and some other name in the component folder
-// There's pros and cons for each way of doing this ...
-import Header from './components/header/header';
-import Footer from './components/footer/footer';
-import Form from './components/form/form';
-import Results from './components/results/results';
+  useEffect(() => { setData() }, [req]);
 
-class App extends React.Component {
+  const callApi = (req) => {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: null,
-      requestParams: {},
-    };
-  }
-
-  callApi = (requestParams) => {
-    // mock output
-    const data = {
-      count: 2,
-      results: [
-        {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-        {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-      ],
-    };
-    this.setState({data, requestParams});
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <Header />
-        <div>Request Method: {this.state.requestParams.method}</div>
-        <div>URL: {this.state.requestParams.url}</div>
-        <Form handleApiCall={this.callApi} />
-        <Results data={this.state.data} />
-        <Footer />
-      </React.Fragment>
-    )
-  }
+    if (req.method === "get") {
+      axios
+        .get(req.url)
+        .then((data) => {
+          const formData = {
+            Headers: data.headers,
+            count: data.data.length,
+            results: data.data,
+          };
+          console.log(data);
+          setData(formData);
+        })
+        .catch((e) => {
+          setData({ response: "loading" })
+          console.log(e);
+        });
+    }
+    if (req.method === "post") {
+      axios
+        .post(req.url, req.body)
+        .then(function (data) {
+          const formData = {
+            header: data.headers,
+            count: 1,
+            data: data.data,
+          };
+          setData(formData);
+        })
+        .catch((e) => {
+          setData({ response: "loading" })
+          console.log(e);
+        });
+    }
+    if (req.method === "delete") {
+      axios
+        .delete(req.url)
+        .then((data) => {
+          const formData = {
+            header: data.headers,
+            count: 1,
+            data: data.data,
+          };
+          setData(formData);
+        })
+        .catch((e) => {
+          setData({ response: "loading" })
+          console.log(e);
+        });
+    }
+    if (req.method === "put") {
+      axios
+        .put(req.url, req.body)
+        .then((data) => {
+          const formData = {
+            header: data.headers,
+            count: 1,
+            data: data.data,
+          };
+          setData(formData);
+        })
+        .catch((e) => {
+          setData({ response: "loading" })
+          console.log(e);
+        });
+    }
+    setReq(req);
+  };
+  return (
+    <>
+      <Header />
+      <Form callApi={callApi} />
+      <div>Request Method: {req.method}</div>
+      <div>URL: {req.url}</div>
+      {<Results data={data}></Results>}
+      <Footer />
+    </>
+  );
 }
-
 export default App;

@@ -1,14 +1,6 @@
 import React from 'react';
-import './results.scss';
-// class Results extends React.Component {
-//   render() {
-//     return (
-//       <section>
-//         <pre>{this.props.data ? JSON.stringify(this.props.data, undefined, 2) : null}</pre>
-//       </section>
-//     );
-//   }
-// }
+import  "./results.scss";
+
 function Results(props) {
   return (
     <section>
@@ -16,4 +8,5 @@ function Results(props) {
   </section>
   )
 }
-export default Results;
+
+export default Results
