@@ -8,13 +8,14 @@ function Form(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    props.clicked(false);
     props.callApi({ method, url, body });
   };
   const handleInput = (e) => {
     setUrl(document.getElementById("inputId").value);
   };
   const handleForm = (e) => {
-    setBody(document.getElementById("body").value);
+    setBody(JSON.parse(document.getElementById("body").value));
   };
   return (
     <>
@@ -25,10 +26,10 @@ function Form(props) {
           <button type="submit" data-testid="go"> GO! </button>
         </label>
         <label >
-          <span id="get" onClick={() => { setMethod("get") }} data-testid="get" >GET </span>
-          <span id="post" onClick={() => { setMethod("post") }}>POST</span>
-          <span id="put" onClick={() => { setMethod("put") }}>PUT</span>
-          <span id="delete" onClick={() => { setMethod("delete") }} >DELETE</span>
+          <button id="get" onClick={() => { setMethod("get") }} data-testid="get" >GET </button>
+          <button id="post" onClick={() => { setMethod("post") }}>POST</button>
+          <button id="put" onClick={() => { setMethod("put") }}>PUT</button>
+          <button id="delete" onClick={() => { setMethod("delete") }} >DELETE</button>
         </label>
       </form>
       {method === "post" || method === "put" ? (<textarea onInput={handleForm} placeholder="type here" ></textarea>) : null}
